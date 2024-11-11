@@ -1,0 +1,30 @@
+restart;             #30.12.2020 by gyroxon
+with(plots):
+with(plottools):
+
+s0 := 0;
+R := 7;
+h := R;
+
+t1 := evalf(0);
+t2 := evalf(8*Pi);
+
+wheel:=proc(t)
+    local s, c, p, l;
+    s := s0 + t*R;
+    c := circle([s, h], R, color = sienna, legend = "колесо"):
+    p := point([s - R*sin(t), h - R*cos(t)], color = blue, symbolsize = 10, symbol = solidcircle):
+    l := line([s, h], [s - R*sin(t), h - R*cos(t)], color = sienna):
+    plots:-display([c, p, l], scaling = constrained);
+end proc;
+
+tracewheel := proc(t)
+    wheel(t);
+end proc;
+
+cycl := plot([R*(t - sin(t)), R*(1 - cos(t)), t = t1 .. t2], color = coral, legend = "циклоида", scaling = constrained):
+
+animate(tracewheel, [t], t = t1 .. t2, background = cycl, trace = 27, view = [-R .. 180, 0 .. 20], tickmarks = [0, 0], scaling = constrained, title = "Циклоида");
+
+
+
